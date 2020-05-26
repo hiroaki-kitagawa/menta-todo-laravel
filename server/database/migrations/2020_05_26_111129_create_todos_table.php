@@ -17,7 +17,7 @@ class CreateTodosTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->string('title');
-            $table->string('detail');
+            $table->string('detail', 4096);
             $table->integer('status');
             $table->timestamps();
             $table->softDeletes();
