@@ -15,12 +15,30 @@ class TodosTableSeeder extends Seeder
             [
                 'id' => '1',
                 'user_id' => '1',
-                'title' => 'title',
-                'detail' => 'detail',
+                'title' => 'title1',
+                'detail' => 'detail1',
                 'status' => '0',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
-            ]
+            ],
+            [
+                'id' => '2',
+                'user_id' => '2',
+                'title' => 'title2',
+                'detail' => 'detail2',
+                'status' => '0',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'id' => '3',
+                'user_id' => '3',
+                'title' => 'title3',
+                'detail' => 'detail3',
+                'status' => '0',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
         ]);
     }
 }
