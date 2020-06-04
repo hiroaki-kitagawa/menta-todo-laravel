@@ -11,16 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'TodosController@index');
+Route::get('create', 'TodosController@create');
+Route::post('create', 'TodosController@store');
 
-// Route::get('todos/{id}', 'TodoController@show');
-// Route::post('todos', 'TodoController@store');
-// Route::put('todos/{id}', 'TodoController@update');
-// Route::delete('todos/{id}', 'TodoController@destroy');
-// Route::get('todos', 'TodoController@index')->name('todos.index');
-// Route::get('todos/create', 'TodoController@create')->name('todos.create');
-// Route::get('todos/{id}/edit', 'TodoController@edit')->name('todos.edit');
-
-Route::resource('todos', 'TodoController');
+Route::resource('todos', 'TodosController');
