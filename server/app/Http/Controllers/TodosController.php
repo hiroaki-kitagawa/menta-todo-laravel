@@ -43,6 +43,7 @@ class TodosController extends Controller
         $todos->title = $request->title;
         $todos->detail = $request->detail;
         $todos->status = $request->status;
+        // dd($todos->detail);
         $todos->save();
 
         return view('todos.store');

@@ -15,10 +15,9 @@
         </div>
         <div class="form-group">
             {{Form::label('statusInput', '状態')}}
-            {{Form::checkbox('staus')}}
+            {{Form::select('staus', ['1' => '未完了', '2' => '完了'])}}
         </div>
-        {{-- <button type="submit">新規追加</button> --}}
-        {{Form::submit('新規追加')}}
+        {{Form::submit('登録')}}
 
     </form>
 
