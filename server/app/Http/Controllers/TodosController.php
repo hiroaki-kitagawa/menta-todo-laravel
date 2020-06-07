@@ -40,10 +40,9 @@ class TodosController extends Controller
     public function store(Request $request)
     {
         $todos = new Todo;
+        $todos->user_id = 1; // 一時的に値を固定
         $todos->title = $request->title;
         $todos->detail = $request->detail;
-        $todos->status = $request->status;
-        // dd($todos->detail);
         $todos->save();
 
         return view('todos.store');
@@ -66,9 +65,10 @@ class TodosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        $todos = Todo::find($id);
+        return view('todos.edit', ['todos' => $todos]);
     }
 
     /**
@@ -78,9 +78,14 @@ class TodosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $todos = Todo::find($request->id);
+        $todos->title = $request->title;
+        $todos->detail = $request->detail;
+        $todos->save();
+
+        return view('todos.update');
     }
 
     /**

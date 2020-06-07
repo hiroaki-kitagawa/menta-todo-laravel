@@ -13,10 +13,7 @@
             {{Form::label('detailInput', '内容')}}
             {{Form::textarea('detail')}}
         </div>
-        <div class="form-group">
-            {{Form::label('statusInput', '状態')}}
-            {{Form::select('staus', ['1' => '未完了', '2' => '完了'])}}
-        </div>
+
         {{Form::submit('登録')}}
 
     </form>

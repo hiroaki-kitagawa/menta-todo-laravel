@@ -14,5 +14,7 @@
 Route::get('/', 'TodosController@index');
 Route::get('create', 'TodosController@create');
 Route::post('create', 'TodosController@store');
+Route::get('edit/{id}', 'TodosController@edit');
+Route::post('edit', 'TodosController@update');
 
-Route::resource('todos', 'TodosController');
+// Route::resource('todos', 'TodosController');

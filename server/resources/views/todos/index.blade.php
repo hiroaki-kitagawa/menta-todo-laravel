@@ -8,6 +8,7 @@
         <ul>
             @foreach ($todos as $todo)
                 <li>{{ $todo->title}}</li>
+                <a href="/edit/{{ $todo->id }}">編集</a>
             @endforeach
         </ul>
 
