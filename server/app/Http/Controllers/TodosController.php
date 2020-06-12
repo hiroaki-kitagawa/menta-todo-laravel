@@ -39,6 +39,11 @@ class TodosController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'title' => 'required|max:255',
+            'detail' => 'required|max:4096',
+        ]);
+
         $todos = new Todo;
         $todos->user_id = 1; // 一時的に値を固定
         $todos->title = $request->title;
@@ -80,6 +85,11 @@ class TodosController extends Controller
      */
     public function update(Request $request)
     {
+        $this->validate($request, [
+            'title' => 'required|max:255',
+            'detail' => 'required|max:4096',
+        ]);
+        
         $todos = Todo::find($request->id);
         $todos->title = $request->title;
         $todos->detail = $request->detail;

@@ -6,6 +6,7 @@
         <div class="col-md-8">
             <h1>Todo新規追加</h1>
 
+            @include('commons.error_messages')
             <form method="post" action="/create">
                 {{ csrf_field() }}
                 <div class="form-group">

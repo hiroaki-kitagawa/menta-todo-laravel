@@ -7,6 +7,7 @@
         <div class="col-md-8">
             <h1>Todo修正</h1>
 
+            @include('commons.error_messages')
             <form action="/edit" method="post">
                 @csrf
                 <input type="hidden" class="form-control" name="id" value="{{ $todos->id }}">
