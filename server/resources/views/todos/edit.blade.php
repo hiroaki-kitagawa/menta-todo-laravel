@@ -14,6 +14,13 @@
             <label for="detailInput">内容</label>
             <textarea class="form-control" id="detailInput" rows="3" name="detail">{{ $todos->detail }}</textarea>
         </div>
+        <div class="form-group">
+            <select name="status" id="">
+                @foreach(config('status') as $key => $status)
+                    <option value="{{ $key }}">{{ $status['label'] }}</option>
+                @endforeach
+            </select>
+        </div>
         {{Form::submit('更新')}}
 
     </form>

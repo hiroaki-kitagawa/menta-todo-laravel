@@ -10,11 +10,14 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
-Route::get('/', 'TodosController@index');
+
+Route::get('todo', 'TodosController@index')->name('todo');
 Route::get('create', 'TodosController@create');
 Route::post('create', 'TodosController@store');
 Route::get('edit/{id}', 'TodosController@edit');
 Route::post('edit', 'TodosController@update');
 
-// Route::resource('todos', 'TodosController');
+// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index');

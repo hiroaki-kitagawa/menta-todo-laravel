@@ -83,6 +83,7 @@ class TodosController extends Controller
         $todos = Todo::find($request->id);
         $todos->title = $request->title;
         $todos->detail = $request->detail;
+        $todos->status = $request->status;
         $todos->save();
 
         return view('todos.update');
