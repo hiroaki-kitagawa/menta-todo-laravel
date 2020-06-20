@@ -12,13 +12,13 @@
 */
 Auth::routes();
 
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('todo', 'TodosController@index');
+    Route::get('create', 'TodosController@create');
+    Route::post('create', 'TodosController@store');
+    Route::get('edit/{id}', 'TodosController@edit');
+    Route::post('edit', 'TodosController@update');
+    Route::post('/todo/destroy/{id}', 'TodosController@destroy');
 
-Route::get('todo', 'TodosController@index');
-Route::get('create', 'TodosController@create');
-Route::post('create', 'TodosController@store');
-Route::get('edit/{id}', 'TodosController@edit');
-Route::post('edit', 'TodosController@update');
-Route::post('/todo/destroy/{id}', 'TodosController@destroy');
-
-// Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/', 'HomeController@index');
+    Route::get('/', 'HomeController@index');
+});
