@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Todo;
+use Auth;
 
 class TodosController extends Controller
 {
@@ -12,12 +13,26 @@ class TodosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $todos = Todo::all();
+        $keyword = $request->input('keyword');
+        $status = $request->input('status');
 
+        $query = Todo::where('user_id', Auth::id());
+
+        if (!empty($keyword)) {
+            $query->where('title', 'LIKE', "%{$keyword}%");
+        }
+
+        if (!empty($status)) {
+            $query->where('status', $status);
+        }
+
+        $todos = $query->get();
         return view('todos.index', [
             'todos' => $todos,
+            'keyword' => $keyword,
+            'status' => $status,
         ]);
     }
 
@@ -48,6 +63,7 @@ class TodosController extends Controller
         $todos->user_id = 1; // 一時的に値を固定
         $todos->title = $request->title;
         $todos->detail = $request->detail;
+        $todos->status = $request->status;
         $todos->save();
 
         return view('todos.store');
@@ -89,14 +105,32 @@ class TodosController extends Controller
             'title' => 'required|max:255',
             'detail' => 'required|max:4096',
         ]);
-        
+
+        $keyword = $request->input('keyword');
+        $status = $request->input('status');
+
         $todos = Todo::find($request->id);
         $todos->title = $request->title;
         $todos->detail = $request->detail;
         $todos->status = $request->status;
         $todos->save();
 
-        return view('todos.update');
+        $query = Todo::where('user_id', Auth::id());
+
+        if (!empty($keyword)) {
+            $query->where('title', 'LIKE', "%{$keyword}%");
+        }
+
+        if (!empty($status)) {
+            $query->where('status', $status);
+        }
+
+        $todos = $query->get();
+        return view('todos.index', [
+            'todos' => $todos,
+            'keyword' => $keyword,
+            'status' => $status,
+        ]);
     }
 
     /**
@@ -107,6 +141,15 @@ class TodosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $todo = Todo::find($id);
+        $todo->delete();
+        $todos = Todo::where('user_id', Auth::id())->get();
+
+        return view('todos.index', [
+            'todos' => $todos,
+        ]);
+
+        // return view('todos.index');
     }
+
 }

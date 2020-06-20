@@ -20,15 +20,11 @@
                     <textarea class="form-control" id="detailInput" rows="3" name="detail">{{ $todos->detail }}</textarea>
                 </div>
                 <div class="form-group">
-                    <select name="status" id="">
-                        @foreach(config('status') as $key => $status)
-                            <option value="{{ $key }}">{{ $status['label'] }}</option>
-                        @endforeach
-                    </select>
+                    {{ Form::select('status', ['未完了', '完了'], $todos->status)}}
                 </div>
                 {{Form::submit('更新')}}
-
             </form>
+            <p><a href="/todo">Todo一覧</a></p>
         </div>
     </div>
 </div>

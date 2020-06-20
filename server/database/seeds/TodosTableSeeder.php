@@ -17,7 +17,7 @@ class TodosTableSeeder extends Seeder
                 'user_id' => '1',
                 'title' => 'title1',
                 'detail' => 'detail1',
-                'status' => '1',
+                'status' => '0',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -26,7 +26,7 @@ class TodosTableSeeder extends Seeder
                 'user_id' => '1',
                 'title' => 'title2',
                 'detail' => 'detail2',
-                'status' => '1',
+                'status' => '0',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
@@ -35,10 +35,19 @@ class TodosTableSeeder extends Seeder
                 'user_id' => '2',
                 'title' => 'title3',
                 'detail' => 'detail3',
-                'status' => '1',
+                'status' => '0',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
+        ]);
+
+        DB::table('users')->insert([
+            [
+                'id' => 1,
+                'name' => '北川博章',
+                'email' => 'hirock17l@gmail.com',
+                'password' => bcrypt('lochic89'),
+            ]
         ]);
     }
 }
