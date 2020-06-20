@@ -24,7 +24,7 @@ class TodosController extends Controller
             $query->where('title', 'LIKE', "%{$keyword}%");
         }
 
-        if (!empty($status)) {
+        if($status != 0) {
             $query->where('status', $status);
         }
 
@@ -121,7 +121,7 @@ class TodosController extends Controller
             $query->where('title', 'LIKE', "%{$keyword}%");
         }
 
-        if (!empty($status)) {
+        if($status != 0) {
             $query->where('status', $status);
         }
 

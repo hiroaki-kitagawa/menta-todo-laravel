@@ -20,7 +20,7 @@
                     <textarea class="form-control" id="detailInput" rows="3" name="detail">{{ $todos->detail }}</textarea>
                 </div>
                 <div class="form-group">
-                    {{ Form::select('status', ['未完了', '完了'], $todos->status)}}
+                    {{ Form::select('status', [1 => '未完了', 2 => '完了'], $todos->status)}}
                 </div>
                 {{Form::submit('更新')}}
             </form>

@@ -11,7 +11,7 @@
                     <input type="text" name="keyword" value="{{$keyword}}" class="form-control" placeholder="タイトルを入力してください">
                     </div>
                     <div>
-                        {{ Form::select('status', ['未完了', '完了'], $status, ['class' => 'ml-2'])}}
+                        {{ Form::select('status', ['全て','未完了', '完了'], $status, ['class' => 'ml-2'])}}
                     </div>
                     <input type="submit" value="検索" class="btn btn-info ml-2">
                 </form>
