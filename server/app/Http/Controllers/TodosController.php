@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Todo;
 use Auth;
+use DB;
 
 class TodosController extends Controller
 {
@@ -18,7 +19,8 @@ class TodosController extends Controller
         $keyword = $request->input('keyword');
         $status = $request->input('status');
 
-        $query = Todo::where('user_id', Auth::id());
+        $todo = new Todo;
+        $query = $todo->getTodo();
 
         if (!empty($keyword)) {
             $query->where('title', 'LIKE', "%{$keyword}%");
@@ -59,12 +61,8 @@ class TodosController extends Controller
             'detail' => 'required|max:4096',
         ]);
 
-        $todos = new Todo;
-        $todos->user_id = 1; // 一時的に値を固定
-        $todos->title = $request->title;
-        $todos->detail = $request->detail;
-        $todos->status = $request->status;
-        $todos->save();
+        $todo = new Todo;
+        $todo->storeTodo($request, Auth::id());
 
         return view('todos.store');
     }
@@ -109,11 +107,8 @@ class TodosController extends Controller
         $keyword = $request->input('keyword');
         $status = $request->input('status');
 
-        $todos = Todo::find($request->id);
-        $todos->title = $request->title;
-        $todos->detail = $request->detail;
-        $todos->status = $request->status;
-        $todos->save();
+        $todo = new Todo;
+        $todo->updateTodo($request);
 
         $query = Todo::where('user_id', Auth::id());
 
@@ -142,14 +137,21 @@ class TodosController extends Controller
     public function destroy($id)
     {
         $todo = Todo::find($id);
-        $todo->delete();
-        $todos = Todo::where('user_id', Auth::id())->get();
 
-        return view('todos.index', [
-            'todos' => $todos,
-        ]);
+        DB::transaction(function () use ($todo) {
+            try {
+                $todo->delete();
+                $todos = Todo::where('user_id', Auth::id())->get();
 
-        // return view('todos.index');
+                return view('todos.index', [
+                    'todos' => $todos,
+                    ]);
+            } catch(\PDOException $e) {
+                echo $e;
+            }
+        });
+
+
     }
 
 }
