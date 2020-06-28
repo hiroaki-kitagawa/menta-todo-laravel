@@ -134,23 +134,30 @@ class TodosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $todo = Todo::find($id);
+        $todo = new Todo;
+        $todo->deleteTodo($id);
 
-        DB::transaction(function () use ($todo) {
-            try {
-                $todo->delete();
-                $todos = Todo::where('user_id', Auth::id())->get();
+        $keyword = $request->input('keyword');
+        $status = $request->input('status');
 
-                return view('todos.index', [
-                    'todos' => $todos,
-                    ]);
-            } catch(\PDOException $e) {
-                echo $e;
-            }
-        });
+        $query = Todo::where('user_id', Auth::id());
 
+        if (!empty($keyword)) {
+            $query->where('title', 'LIKE', "%{$keyword}%");
+        }
+
+        if($status != 0) {
+            $query->where('status', $status);
+        }
+
+        $todos = $query->get();
+        return view('todos.index', [
+            'todos' => $todos,
+            'keyword' => $keyword,
+            'status' => $status,
+        ]);
 
     }
 
