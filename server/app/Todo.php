@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Controllers\Log;
 
 use Auth;
 
@@ -37,7 +38,7 @@ class Todo extends Model
             DB::commit();
         } catch (\PDOException $e) {
             DB::rollback();
-            throw $e;
+            \Log::error('タスクの追加に失敗しました。');
         }
     }
 
@@ -54,7 +55,7 @@ class Todo extends Model
             DB::commit();
         } catch (\PDOException $e) {
             DB::rollback();
-            throw $e;
+            \Log::error('タスクの編集に失敗しました。');
         }
     }
 
@@ -66,7 +67,7 @@ class Todo extends Model
             DB::commit();
         } catch (\PDOException $e) {
             DB::rollBack();
-            throw $e;
+            \Log::error('タスクの削除に失敗しました。');
         }
     }
 
