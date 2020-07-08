@@ -161,4 +161,59 @@ class TodosController extends Controller
 
     }
 
+    public function export(Request $request)
+    {
+        $headers = [ //ヘッダー情報
+            'Content-type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename=csvexport.csv',
+            'Pragma' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0',
+        ];
+
+        $callback = function()
+        {
+
+            $createCsvFile = fopen('php://output', 'w'); //ファイル作成
+
+            $columns = [ //1行目の情報
+                'id',
+                'title',
+                'detail',
+                'status',
+                'created_at'
+            ];
+
+            mb_convert_variables('SJIS-win', 'UTF-8', $columns); //文字化け対策
+
+            fputcsv($createCsvFile, $columns); //1行目の情報を追記
+
+            $bookingCurve = DB::table('todos');  // データベースのテーブルを指定
+
+            $bookingCurveResults = $bookingCurve  //データベースからデータ取得
+                ->select(['id', 'title', 'detail', 'status', 'created_at'])
+                ->where('deleted_at', null)
+                ->orderBy('created_at')
+                ->get();
+
+            foreach ($bookingCurveResults as $row) {  //データを1行ずつ回す
+                $csv = [
+                    $row->id,  //オブジェクトなので -> で取得
+                    $row->title,
+                    $row->detail,
+                    $row->status,
+                    $row->created_at,
+                ];
+
+                mb_convert_variables('SJIS-win', 'UTF-8', $csv); //文字化け対策
+
+                fputcsv($createCsvFile, $csv); //ファイルに追記する
+            }
+            fclose($createCsvFile); //ファイル閉じる
+        };
+
+        return response()->stream($callback, 200, $headers); //ここで実行
+
+    }
+
 }
