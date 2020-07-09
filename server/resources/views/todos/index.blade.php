@@ -39,32 +39,31 @@
 
             <h3>CSV出力</h3>
 
-            <div id="app">
-                <button @click="csvdownload"  class="btn btn-success btn-sm  ml-2">CSVダウンロード</button>
-            </div>
+            <button id="csvdownload"  class="btn btn-success btn-sm  ml-2">CSVダウンロード</button>
 
-            {!! Form::open(['action' => 'TodosController@export', 'method' => 'get', 'target' => '_blank']) !!}
+            {{-- Laravelの画面遷移でダウンロード --}}
+            {{-- {!! Form::open(['action' => 'TodosController@export', 'method' => 'get', 'target' => '_blank']) !!}
 
             <input class="csv-download" type="submit" value="CSVダウンロード">
 
-            {!! Form::close() !!}
+            {!! Form::close() !!} --}}
 
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-    const app = new Vue({
-        el: '#app',
-        methods: {
-            csvdownload: function(){
-                axios.get('/todo/csv')
-                .then(response => this.users = response.data)
-                .catch(response => console.log(response))
-            }
-        },
+    $(function(){
+        $('#csvdownload').on('click', function() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/todos/csv',
+                }).done(function (result) {
+                    console.log(result);
+                }).fail(function (result) {
+                    alert('ファイルの取得に失敗しました。');
+                });
+        );
     });
 </script>
 
