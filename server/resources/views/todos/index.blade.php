@@ -17,6 +17,11 @@
                 </form>
             </div>
 
+            <h3>CSV出力</h3>
+            <div class="col-sm-10" style="padding:10px 0 20px 0; padding-left:0px;">
+                <button id="csvdownload"  class="btn btn-success btn-sm  ml-2">CSVダウンロード</button>
+            </div>
+
             <h3>Todo一覧</h3>
 
             @if (count($todos) > 0)
@@ -36,10 +41,6 @@
             @endif
 
             <p><a href="/create">新規追加</a></p>
-
-            <h3>CSV出力</h3>
-
-            <button id="csvdownload"  class="btn btn-success btn-sm  ml-2">CSVダウンロード</button>
 
             {{-- Laravelの画面遷移でダウンロード --}}
             {{-- {!! Form::open(['action' => 'TodosController@export', 'method' => 'get', 'target' => '_blank']) !!}
