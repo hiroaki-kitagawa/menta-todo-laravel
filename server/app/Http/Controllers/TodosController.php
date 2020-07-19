@@ -193,6 +193,7 @@ class TodosController extends Controller
             $bookingCurveResults = $bookingCurve  //データベースからデータ取得
                 ->select(['id', 'title', 'detail', 'status', 'created_at'])
                 ->where('deleted_at', null)
+                ->where('user_id', Auth::id())
                 ->orderBy('created_at')
                 ->get();
 
