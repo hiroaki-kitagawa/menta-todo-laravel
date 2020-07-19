@@ -58,21 +58,6 @@
             alert('ファイルの取得に失敗しました。');
         });
     }
-
-
-    // function csvdownload() {}
-    //     // $('#csvdownload').on('click', function() {
-    //             alert('alert');
-    //             $.ajax({
-    //                 type: 'GET',
-    //                 url: '/todos/csv',
-    //             }).done(function (result) {
-    //                 console.log(result);
-    //             }).fail(function (result) {
-    //                 alert('ファイルの取得に失敗しました。');
-    //             });
-    //     );
-    // });
 </script>
 
 @endsection
