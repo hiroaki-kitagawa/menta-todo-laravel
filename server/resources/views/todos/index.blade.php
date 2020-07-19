@@ -19,7 +19,7 @@
 
             <h3>CSV出力</h3>
             <div class="col-sm-10" style="padding:10px 0 20px 0; padding-left:0px;">
-                <button id="csvdownload"  class="btn btn-success btn-sm  ml-2">CSVダウンロード</button>
+                <button onclick="CsvDownload()" id="csvdownload"  class="btn btn-success btn-sm  ml-2">CSVダウンロード</button>
             </div>
 
             <h3>Todo一覧</h3>
@@ -42,30 +42,37 @@
 
             <p><a href="/create">新規追加</a></p>
 
-            {{-- Laravelの画面遷移でダウンロード --}}
-            {{-- {!! Form::open(['action' => 'TodosController@export', 'method' => 'get', 'target' => '_blank']) !!}
-
-            <input class="csv-download" type="submit" value="CSVダウンロード">
-
-            {!! Form::close() !!} --}}
-
         </div>
     </div>
 </div>
 
 <script>
-    $(function(){
-        $('#csvdownload').on('click', function() {
-                $.ajax({
-                    type: 'GET',
-                    url: '/todos/csv',
-                }).done(function (result) {
-                    console.log(result);
-                }).fail(function (result) {
-                    alert('ファイルの取得に失敗しました。');
-                });
-        );
-    });
+    const CsvDownload = () =>{
+        // alert('alert');
+        $.ajax({
+            type: 'GET',
+            url: '/todo/csv',
+        }).done(function (result) {
+            window.location = '/todo/csv';
+        }).fail(function (result) {
+            alert('ファイルの取得に失敗しました。');
+        });
+    }
+
+
+    // function csvdownload() {}
+    //     // $('#csvdownload').on('click', function() {
+    //             alert('alert');
+    //             $.ajax({
+    //                 type: 'GET',
+    //                 url: '/todos/csv',
+    //             }).done(function (result) {
+    //                 console.log(result);
+    //             }).fail(function (result) {
+    //                 alert('ファイルの取得に失敗しました。');
+    //             });
+    //     );
+    // });
 </script>
 
 @endsection
